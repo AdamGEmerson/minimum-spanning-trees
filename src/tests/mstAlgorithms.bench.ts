@@ -1,5 +1,5 @@
 import { bench, describe, expect } from 'vitest';
-import { randomVertices, createGraph, type Graph } from 'mst-graphs';
+import { randomEdges, createGraph, type Graph } from 'mst-graphs';
 import { callKruskalsMST, mergeSort } from '$lib/kruskals';
 import { callPrimsMST } from '$lib/prims';
 
@@ -12,7 +12,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 	}, {
 		setup: () => {
 			graph = createGraph(10)
-			randomVertices(graph)
+			randomEdges(graph)
 		}}
 	)
 
@@ -22,7 +22,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 		}, {
 			setup: () => {
 				graph = createGraph(100)
-				randomVertices(graph)
+				randomEdges(graph)
 			}}
 	)
 
@@ -32,7 +32,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 		}, {
 			setup: () => {
 				graph = createGraph(1000)
-				randomVertices(graph)
+				randomEdges(graph)
 			}}
 	)
 
@@ -43,7 +43,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 			iterations: 1000,
 			setup: () => {
 				graph = createGraph(5000)
-				randomVertices(graph)
+				randomEdges(graph)
 			}}
 	)
 
@@ -54,7 +54,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 			iterations: 1000,
 			setup: () => {
 				graph = createGraph(10000)
-				randomVertices(graph)
+				randomEdges(graph)
 			}}
 	)
 })
@@ -66,7 +66,7 @@ describe('Prims\'s MST Algorithm', () => {
 	}, {
 		setup: () => {
 			graph = createGraph(10)
-			randomVertices(graph)
+			randomEdges(graph)
 		}}
 	)
 
@@ -76,7 +76,7 @@ describe('Prims\'s MST Algorithm', () => {
 		}, {
 			setup: () => {
 				graph = createGraph(100)
-				randomVertices(graph)
+				randomEdges(graph)
 			}}
 	)
 
@@ -86,7 +86,7 @@ describe('Prims\'s MST Algorithm', () => {
 		}, {
 			setup: () => {
 				graph = createGraph(1000)
-				randomVertices(graph)
+				randomEdges(graph)
 			}}
 	)
 
@@ -97,7 +97,7 @@ describe('Prims\'s MST Algorithm', () => {
 			iterations: 1000,
 			setup: () => {
 				graph = createGraph(5000)
-				randomVertices(graph)
+				randomEdges(graph)
 			}}
 	)
 
@@ -108,7 +108,7 @@ describe('Prims\'s MST Algorithm', () => {
 			iterations: 1000,
 			setup: () => {
 				graph = createGraph(10000)
-				randomVertices(graph)
+				randomEdges(graph)
 			}}
 	)
 })
@@ -119,7 +119,7 @@ describe('Merge Sort', () => {
 	}, {
 		setup: () => {
 			graph = createGraph(10)
-			randomVertices(graph)
+			randomEdges(graph)
 		}
 	})
 
@@ -128,7 +128,7 @@ describe('Merge Sort', () => {
 	}, {
 		setup: () => {
 			graph = createGraph(100)
-			randomVertices(graph)
+			randomEdges(graph)
 		}
 	})
 
@@ -137,7 +137,7 @@ describe('Merge Sort', () => {
 	}, {
 		setup: () => {
 			graph = createGraph(1000)
-			randomVertices(graph)
+			randomEdges(graph)
 		}
 	})
 
@@ -147,7 +147,7 @@ describe('Merge Sort', () => {
 		iterations: 1000,
 		setup: () => {
 			graph = createGraph(5000)
-			randomVertices(graph)
+			randomEdges(graph)
 		}
 	})
 
@@ -157,7 +157,7 @@ describe('Merge Sort', () => {
 		iterations: 1000,
 		setup: () => {
 			graph = createGraph(10000)
-			randomVertices(graph)
+			randomEdges(graph)
 		}
 	})
 })

@@ -1,5 +1,5 @@
 import { expect, test, describe } from 'vitest';
-import { addEdge, randomVertices, createGraph } from 'mst-graphs';
+import { addEdge, randomEdges, createGraph } from 'mst-graphs';
 import { callKruskalsMST } from '$lib/kruskals';
 import { callPrimsMST } from '$lib/prims';
 
@@ -27,14 +27,14 @@ describe('Graph Generation', () => {
 
 	test('Connect vertices.', () => {
 		const graph = createGraph(9);
-		randomVertices(graph);
+		randomEdges(graph);
 		expect(graph.edges.length).gt(0);
 		expect(graph.edges.length).lte(graph.V * 2) // Cycle graph plus random edges between 1 and n
 	})
 
 	test('No duplicate edges in graph.', () => {
 		const graph = createGraph(9);
-		randomVertices(graph);
+		randomEdges(graph);
 		const edgeSet = new Set();
 		graph.edges.forEach(edge => {
 			const edgeKey = `${edge.src}-${edge.dest}`;
@@ -47,14 +47,14 @@ describe('Graph Generation', () => {
 describe('Kruskal\'s MST Algorithm', () => {
 	test('Number of edges is n-1', () => {
 		const graph = createGraph(12)
-		randomVertices(graph)
+		randomEdges(graph)
 		const mst = callKruskalsMST(graph)
 		expect(mst.length === graph.edges.length - 1)
 	})
 
 	test('Single Node', () => {
 		const graph = createGraph(1)
-		randomVertices(graph)
+		randomEdges(graph)
 		const mst = callKruskalsMST(graph)
 		expect(mst.length === 0)
 	})
@@ -89,14 +89,14 @@ describe('Prims\'s MST Algorithm', () => {
 
 	test('Number of edges is n-1', () => {
 		const graph = createGraph(12)
-		randomVertices(graph)
+		randomEdges(graph)
 		const mst = callPrimsMST(graph)
 		expect(mst.length === graph.edges.length - 1)
 	})
 
 	test('Single Node', () => {
 		const graph = createGraph(1)
-		randomVertices(graph)
+		randomEdges(graph)
 		const mst = callPrimsMST(graph)
 		expect(mst.length === 0)
 	})

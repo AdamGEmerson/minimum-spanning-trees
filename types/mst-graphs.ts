@@ -40,7 +40,7 @@ export function addEdge(graph: Graph, src: number, dest: number, weight: number)
 
 
 // Fully connect a graph and then add a random number of edges
-export function randomVertices(graph: Graph): void {
+export function randomEdges(graph: Graph): void {
 
 	if (graph.V <= 1) return;
 

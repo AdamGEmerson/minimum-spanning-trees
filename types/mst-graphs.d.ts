@@ -20,5 +20,5 @@ declare module 'mst-graphs' {
 
 	export function createGraph(numVertices: number): Graph;
 	export function addEdge(graph: Graph, src: number, dest: number, weight: number): void;
-	export function connectVertices(graph: Graph): void;
+	export function randomEdges(graph: Graph): void;
 }

@@ -3,12 +3,12 @@
 	import RuntimeChart from '$lib/components/RuntimeChart.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { callKruskalsMST } from '$lib/kruskals';
-	import { randomVertices, createGraph, type Edge, type Graph } from 'mst-graphs';
+	import { randomEdges, createGraph, type Edge, type Graph } from 'mst-graphs';
 
 	let numNodes = 9;
 	let mst: Edge[] = [];
 	let graph: Graph = createGraph(numNodes);
-	randomVertices(graph)
+	randomEdges(graph)
 
 	$: {
 		graph = createGraph(numNodes);
