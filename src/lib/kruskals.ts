@@ -1,29 +1,24 @@
 import type { Edge, Graph, Vertex } from 'mst-graphs';
 
-const mst: Edge[] = [];
-const sets: Vertex[] = [];
-
 // Initialize each vertex to be its own parent
 const makeSet = (i: number): Vertex => ({
 	parent: i, rank: 0
 })
 
 // Find the root of the set that the vertex belongs to
-const find = (i: number): number => {
+const find = (sets: Vertex[], i: number): number => {
 
-	// If i == parent, then the vertex is the root
-	if (sets[i].parent === i) {
-		return i;
+	// If the vertex is not the root, recursively find the root and update paths.
+	if (sets[i].parent !== i) {
+		sets[i].parent = find(sets, sets[i].parent); // Path compression
 	}
-
-	// Recurse to find the root
-	return find(sets[i].parent);
+	return sets[i].parent; // Else, parent is the root
 }
 
 // Merge two sets for union find
-const union = (u: number, v: number) => {
-	const uRoot = find(u);
-	const vRoot = find(v);
+const union = (sets: Vertex[], u: number, v: number) => {
+	const uRoot = find(sets, u);
+	const vRoot = find(sets, v);
 
 	if (uRoot === vRoot) {
 		return; // This is already in the same set
@@ -73,11 +68,10 @@ function merge(left: Edge[], right: Edge[]): Edge[] {
 	return result.concat(left.slice(i)).concat(right.slice(j));
 }
 
-
 // Kruskal's algorithm
-function kruskalsMST(g: Graph): Edge[] {
-	// Clear the sets array
-	sets.length = 0;
+export function kruskalsMST(g: Graph): Edge[] {
+	const mst: Edge[] = [];
+	const sets: Vertex[] = [];
 
 	// Initialize the sets for union find (to check for cycles)
 	for (let i = 0; i < g.V!; i++) {
@@ -91,17 +85,12 @@ function kruskalsMST(g: Graph): Edge[] {
 
 	// Check for cycles
 	for (let i = 0; i < g.edges.length; i++) {
-		if (find(g.edges[i].src) !== find(g.edges[i].dest)) {
+		if (find(sets, g.edges[i].src) !== find(sets, g.edges[i].dest)) {
 			// No cycle found, add to the MST and merge the sets
 			mst.push(g.edges[i]);
-			union(g.edges[i].src, g.edges[i].dest);
+			union(sets, g.edges[i].src, g.edges[i].dest);
 		}
 	}
 	return mst;
-}
-
-
-export function callKruskalsMST(graph: Graph): Edge[] {
-	return kruskalsMST(graph);
 }
 

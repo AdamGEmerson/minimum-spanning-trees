@@ -1,23 +1,31 @@
-import { expect, test, describe } from 'vitest';
+import { expect, test, describe, beforeEach } from 'vitest';
 import { addEdge, randomEdges, createGraph } from 'mst-graphs';
-import { callKruskalsMST } from '$lib/kruskals';
+import { kruskalsMST } from '$lib/kruskals';
 import { callPrimsMST } from '$lib/prims';
 
+
+let graph;
+let mst;
 describe('Graph Generation', () => {
+	beforeEach(() => {
+		// Reset the graph before each test
+		graph = null;
+	});
+
 	test('Generate a graph with the specified (9) number of nodes', () => {
-		const graph = createGraph(9);
+		graph = createGraph(9);
 		expect(graph.vertices.length).toBe(9);
 		expect(graph.V).toBe(9);
 	});
 
 	test('Graph contains no edges', () => {
-		const graph = createGraph(9);
+		graph = createGraph(9);
 		// No edges should be added yet
 		expect(graph.edges.length).toBe(0);
 	});
 
 	test('Add an edge to the graph, verify keys', () => {
-		const graph = createGraph(9)
+		graph = createGraph(9)
 		addEdge(graph, 0, 1, 4);
 		expect(graph.edges.length).toBe(1);
 		expect(graph.edges[0].src).toBe(0);
@@ -26,14 +34,14 @@ describe('Graph Generation', () => {
 	});
 
 	test('Connect vertices.', () => {
-		const graph = createGraph(9);
+		graph = createGraph(9);
 		randomEdges(graph);
 		expect(graph.edges.length).gt(0);
 		expect(graph.edges.length).lte(graph.V * 2) // Cycle graph plus random edges between 1 and n
 	})
 
 	test('No duplicate edges in graph.', () => {
-		const graph = createGraph(9);
+		graph = createGraph(9);
 		randomEdges(graph);
 		const edgeSet = new Set();
 		graph.edges.forEach(edge => {
@@ -45,85 +53,100 @@ describe('Graph Generation', () => {
 })
 
 describe('Kruskal\'s MST Algorithm', () => {
+	beforeEach(() => {
+		graph = null
+		mst = null
+	})
+
 	test('Number of edges is n-1', () => {
-		const graph = createGraph(12)
+		graph = createGraph(12)
 		randomEdges(graph)
-		const mst = callKruskalsMST(graph)
-		expect(mst.length === graph.edges.length - 1)
+		mst = kruskalsMST(graph)
+		expect(mst.length).toBe(graph.V - 1)
 	})
 
 	test('Single Node', () => {
-		const graph = createGraph(1)
+		graph = createGraph(1)
 		randomEdges(graph)
-		const mst = callKruskalsMST(graph)
-		expect(mst.length === 0)
+		mst = kruskalsMST(graph)
+		expect(mst.length).toBe(0)
 	})
 
 	test('Two Nodes', () => {
-		const graph = createGraph(2)
+		graph = createGraph(2)
+		console.log(graph)
 		addEdge(graph, 0, 1, 4)
-		const mst = callKruskalsMST(graph)
-		expect(mst.length === 1)
-		expect(mst[0].src === 0 && mst[0].dest === 1)
-		expect(mst[0].weight === 4)
+		mst = kruskalsMST(graph)
+		console.log(mst)
+		expect(mst.length).toBe(1)
+		expect(mst[0].src).toBe(0)
+		expect(mst[0].dest).toBe(1)
+		expect(mst[0].weight).toBe(4)
 	})
 
 	test('Triangle Graph', () => {
-		const graph = createGraph(3)
+		graph = createGraph(3)
 		addEdge(graph, 0, 1, 4)
 		addEdge(graph, 1, 2, 5)
 		addEdge(graph, 0, 2, 6)
-		const mst = callKruskalsMST(graph)
-
+		mst = kruskalsMST(graph)
 		// The two smallest edges should be in the MST
-		expect(mst.length === 2)
-		expect(mst[0].src === 0 && mst[0].dest === 1)
-		expect(mst[0].weight === 4)
-		expect(mst[1].src === 1 && mst[1].dest === 2)
-		expect(mst[1].weight === 5)
+		expect(mst.length).toBe(2)
+		expect(mst[0].src).toBe(0)
+		expect(mst[0].dest).toBe(1)
+		expect(mst[0].weight).toBe(4)
+		expect(mst[1].src).toBe(1)
+		expect(mst[1].dest).toBe(2)
+		expect(mst[1].weight).toBe(5)
 	})
 
 })
 
 describe('Prims\'s MST Algorithm', () => {
 
+	beforeEach(() => {
+		graph = null
+		mst = null
+	})
+
 	test('Number of edges is n-1', () => {
-		const graph = createGraph(12)
+		graph = createGraph(12)
 		randomEdges(graph)
-		const mst = callPrimsMST(graph)
-		expect(mst.length === graph.edges.length - 1)
+		mst = callPrimsMST(graph)
+		expect(mst.length).toBe(graph.V - 1)
 	})
 
 	test('Single Node', () => {
-		const graph = createGraph(1)
+		graph = createGraph(1)
 		randomEdges(graph)
-		const mst = callPrimsMST(graph)
-		expect(mst.length === 0)
+		mst = callPrimsMST(graph)
+		expect(mst.length).toBe(0)
 	})
 
 	test('Two Nodes', () => {
-		const graph = createGraph(2)
+		graph = createGraph(2)
 		addEdge(graph, 0, 1, 4)
-		const mst = callPrimsMST(graph)
-		expect(mst.length === 1)
-		describe.todo('Fix Two Nodes')
-		// expect(mst[0].src === 0 && mst[0].dest === 1)
-		// expect(mst[0].weight === 4)
+		mst = callPrimsMST(graph)
+		expect(mst.length).toBe(1)
+		expect(mst[0].src).toBe(0)
+		expect(mst[0].dest).toBe(1)
+		expect(mst[0].weight).toBe(4)
 	})
 
 	test('Triangle Graph', () => {
-		const graph = createGraph(3)
+		graph = createGraph(3)
 		addEdge(graph, 0, 1, 4)
 		addEdge(graph, 1, 2, 5)
 		addEdge(graph, 0, 2, 6)
-		const mst = callPrimsMST(graph)
+		mst = callPrimsMST(graph)
 
 		// The two smallest edges should be in the MST
-		expect(mst.length === 2)
-		describe.todo('Fix Triangle Graph')
-		// expect(mst[0].src === 0 && mst[0].dest === 1)
-		// expect(mst[0].weight === 4)
-		// expect(mst[1].src === 1 && mst[1].dest === 2)
-		// expect(mst[1].weight === 5)
+		expect(mst.length).toBe(2)
+		expect(mst[0].src).toBe(0)
+		expect(mst[0].dest).toBe(1)
+		expect(mst[0].weight).toBe(4)
+		expect(mst[1].src).toBe(1)
+		expect(mst[1].dest).toBe(2)
+		expect(mst[1].weight).toBe(5)
 	})
 })

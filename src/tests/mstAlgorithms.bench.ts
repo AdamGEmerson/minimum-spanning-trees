@@ -8,7 +8,7 @@ let graph: Graph;
 describe('Kruskal\'s MST Algorithm', () => {
 	bench('n=10', () => {
 		const mst = callKruskalsMST(graph)
-		expect(mst.length === graph.edges.length - 1)
+		expect(mst.length).toBe(graph.vertices.length - 1)
 	}, {
 		setup: () => {
 			graph = createGraph(10)
@@ -18,7 +18,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 
 	bench('n=100', () => {
 			const mst = callKruskalsMST(graph)
-			expect(mst.length === graph.edges.length - 1)
+			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
 			setup: () => {
 				graph = createGraph(100)
@@ -28,7 +28,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 
 	bench('n=1000', () => {
 			const mst = callKruskalsMST(graph)
-			expect(mst.length === graph.edges.length - 1)
+			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
 			setup: () => {
 				graph = createGraph(1000)
@@ -38,7 +38,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 
 	bench('n=5000', () => {
 			const mst = callKruskalsMST(graph)
-			expect(mst.length === graph.edges.length - 1)
+			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
 			iterations: 1000,
 			setup: () => {
@@ -49,7 +49,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 
 	bench('n=10000', () => {
 			const mst = callKruskalsMST(graph)
-			expect(mst.length === graph.edges.length - 1)
+			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
 			iterations: 1000,
 			setup: () => {
@@ -62,7 +62,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 describe('Prims\'s MST Algorithm', () => {
 	bench('n=10', () => {
 		const mst = callPrimsMST(graph)
-		expect(mst.length === graph.edges.length - 1)
+		expect(mst.length).toBe(graph.vertices.length - 1)
 	}, {
 		setup: () => {
 			graph = createGraph(10)
@@ -72,7 +72,7 @@ describe('Prims\'s MST Algorithm', () => {
 
 	bench('n=100', () => {
 			const mst = callPrimsMST(graph)
-			expect(mst.length === graph.edges.length - 1)
+			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
 			setup: () => {
 				graph = createGraph(100)
@@ -82,7 +82,7 @@ describe('Prims\'s MST Algorithm', () => {
 
 	bench('n=1000', () => {
 			const mst = callPrimsMST(graph)
-			expect(mst.length === graph.edges.length - 1)
+			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
 			setup: () => {
 				graph = createGraph(1000)
@@ -92,9 +92,8 @@ describe('Prims\'s MST Algorithm', () => {
 
 	bench('n=5000', () => {
 			const mst = callPrimsMST(graph)
-			expect(mst.length === graph.edges.length - 1)
+			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
-			iterations: 1000,
 			setup: () => {
 				graph = createGraph(5000)
 				randomEdges(graph)
@@ -103,9 +102,8 @@ describe('Prims\'s MST Algorithm', () => {
 
 	bench('n=10000', () => {
 			const mst = callPrimsMST(graph)
-			expect(mst.length === graph.edges.length - 1)
+			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
-			iterations: 1000,
 			setup: () => {
 				graph = createGraph(10000)
 				randomEdges(graph)

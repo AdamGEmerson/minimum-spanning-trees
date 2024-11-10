@@ -5,13 +5,23 @@
 	import { schemeCategory10 } from 'd3-scale-chromatic';
 
 	import { Chart, Circle, ForceSimulation, Link, Svg, Tooltip } from 'layerchart';
-	import type { Edge, Graph } from '../../kruskals';
+	import type { Edge, Graph } from 'mst-graphs';
 
 	export let graph: Graph;
 	export let mst: Edge[];
+	// Initialize nodes and links based on graph
+	$: nodes = Array.from({ length: graph.V }, (_, i) => ({
+		id: i,
+		group: i % 3,
+		x: undefined,
+		y: undefined
+	}));
 
-	const nodes = Array.from({ length: graph.V }, (_, i) => ({ id: i, group: i % 3 }));
-	const links = graph.edges.map(({ src, dest, weight }) => ({ source: src, target: dest, value: weight }));
+	$: links = graph.edges.map(({ src, dest, weight }) => ({
+		source: src,
+		target: dest,
+		value: weight
+	}));
 
 	const colorScale = scaleOrdinal(schemeCategory10);
 
@@ -34,12 +44,17 @@
 	let hasCenterForce = true;
 
 	$: {
+		graph;
+		mst;
 		reheatSimulation();
 	}
 
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-expect-error
-	const linkForce = forceLink(links).id((d) => d.id);
+	// const linkForce = forceLink(links).id((d) => d.id);
+
+	$: linkForce = forceLink(links)
+		.id((d: any) => d.id)
+		.distance(linkDistance);
 
 	const chargeForce = forceManyBody();
 	const collideForce = forceCollide();
@@ -89,17 +104,23 @@
 
 
 	// Update colors on MST change
-	const linkColors: string[] = [];
+	// const linkColors: string[] = [];
 
-	$: {
-		links.map((link, index) => {
-			if (mst.some((edge) => edge.src === link.source && edge.dest === link.target)) {
-				linkColors[index] = 'stroke-green-500';
-			} else {
-				linkColors[index] = 'stroke-black';
-			}
-		});
-	}
+	// $: {
+	// 	links.map((link, index) => {
+	// 		if (mst.some((edge) => edge.src === link.source && edge.dest === link.target)) {
+	// 			linkColors[index] = 'stroke-green-500';
+	// 		} else {
+	// 			linkColors[index] = 'stroke-black';
+	// 		}
+	// 	});
+	// }
+	$: linkColors = links.map(link => {
+		return mst.some(edge =>
+			(edge.src === link.source && edge.dest === link.target) ||
+			(edge.src === link.target && edge.dest === link.source)
+		) ? 'stroke-green-500' : 'stroke-black';
+	});
 
 </script>
 
