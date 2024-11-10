@@ -1,7 +1,7 @@
 import { expect, test, describe, beforeEach } from 'vitest';
 import { addEdge, randomEdges, createGraph } from 'mst-graphs';
 import { kruskalsMST } from '$lib/kruskals';
-import { callPrimsMST } from '$lib/prims';
+import { prims } from '$lib/prims';
 
 
 let graph;
@@ -112,21 +112,21 @@ describe('Prims\'s MST Algorithm', () => {
 	test('Number of edges is n-1', () => {
 		graph = createGraph(12)
 		randomEdges(graph)
-		mst = callPrimsMST(graph)
+		mst = prims(graph)
 		expect(mst.length).toBe(graph.V - 1)
 	})
 
 	test('Single Node', () => {
 		graph = createGraph(1)
 		randomEdges(graph)
-		mst = callPrimsMST(graph)
+		mst = prims(graph)
 		expect(mst.length).toBe(0)
 	})
 
 	test('Two Nodes', () => {
 		graph = createGraph(2)
 		addEdge(graph, 0, 1, 4)
-		mst = callPrimsMST(graph)
+		mst = prims(graph)
 		expect(mst.length).toBe(1)
 		expect(mst[0].src).toBe(0)
 		expect(mst[0].dest).toBe(1)
@@ -138,7 +138,7 @@ describe('Prims\'s MST Algorithm', () => {
 		addEdge(graph, 0, 1, 4)
 		addEdge(graph, 1, 2, 5)
 		addEdge(graph, 0, 2, 6)
-		mst = callPrimsMST(graph)
+		mst = prims(graph)
 
 		// The two smallest edges should be in the MST
 		expect(mst.length).toBe(2)

@@ -23,7 +23,7 @@ function createAdjacencyList(graph: Graph): Map<number, Edge[]> {
 	return adjList;
 }
 
-function prims(graph: Graph): Graph {
+export function prims(graph: Graph): Edge[] {
 	const vertices: Vertex[] = new Array(graph.V).fill(null).map(() => ({
 		parent: -1,
 		key: Infinity,
@@ -75,14 +75,5 @@ function prims(graph: Graph): Graph {
 		}
 	}
 
-	return {
-		vertices: vertices,
-		edges: mstEdges,
-		V: graph.V
-	};
-}
-
-export function callPrimsMST(graph: Graph): Edge[] {
-	let g = prims(graph);
-	return g.edges;
+	return mstEdges
 }

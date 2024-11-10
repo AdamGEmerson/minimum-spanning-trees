@@ -1,13 +1,13 @@
 import { bench, describe, expect } from 'vitest';
 import { randomEdges, createGraph, type Graph } from 'mst-graphs';
-import { callKruskalsMST, mergeSort } from '$lib/kruskals';
-import { callPrimsMST } from '$lib/prims';
+import { kruskalsMST, mergeSort } from '$lib/kruskals';
+import { prims } from '$lib/prims';
 
 let graph: Graph;
 
 describe('Kruskal\'s MST Algorithm', () => {
 	bench('n=10', () => {
-		const mst = callKruskalsMST(graph)
+		const mst = kruskalsMST(graph)
 		expect(mst.length).toBe(graph.vertices.length - 1)
 	}, {
 		setup: () => {
@@ -17,7 +17,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 	)
 
 	bench('n=100', () => {
-			const mst = callKruskalsMST(graph)
+			const mst = kruskalsMST(graph)
 			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
 			setup: () => {
@@ -27,7 +27,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 	)
 
 	bench('n=1000', () => {
-			const mst = callKruskalsMST(graph)
+			const mst = kruskalsMST(graph)
 			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
 			setup: () => {
@@ -37,7 +37,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 	)
 
 	bench('n=5000', () => {
-			const mst = callKruskalsMST(graph)
+			const mst = kruskalsMST(graph)
 			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
 			iterations: 1000,
@@ -48,7 +48,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 	)
 
 	bench('n=10000', () => {
-			const mst = callKruskalsMST(graph)
+			const mst = kruskalsMST(graph)
 			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
 			iterations: 1000,
@@ -61,7 +61,7 @@ describe('Kruskal\'s MST Algorithm', () => {
 
 describe('Prims\'s MST Algorithm', () => {
 	bench('n=10', () => {
-		const mst = callPrimsMST(graph)
+		const mst = prims(graph)
 		expect(mst.length).toBe(graph.vertices.length - 1)
 	}, {
 		setup: () => {
@@ -71,7 +71,7 @@ describe('Prims\'s MST Algorithm', () => {
 	)
 
 	bench('n=100', () => {
-			const mst = callPrimsMST(graph)
+			const mst = prims(graph)
 			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
 			setup: () => {
@@ -81,7 +81,7 @@ describe('Prims\'s MST Algorithm', () => {
 	)
 
 	bench('n=1000', () => {
-			const mst = callPrimsMST(graph)
+			const mst = prims(graph)
 			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
 			setup: () => {
@@ -91,7 +91,7 @@ describe('Prims\'s MST Algorithm', () => {
 	)
 
 	bench('n=5000', () => {
-			const mst = callPrimsMST(graph)
+			const mst = prims(graph)
 			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
 			setup: () => {
@@ -101,7 +101,7 @@ describe('Prims\'s MST Algorithm', () => {
 	)
 
 	bench('n=10000', () => {
-			const mst = callPrimsMST(graph)
+			const mst = prims(graph)
 			expect(mst.length).toBe(graph.vertices.length - 1)
 		}, {
 			setup: () => {

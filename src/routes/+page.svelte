@@ -4,7 +4,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { kruskalsMST } from '$lib/kruskals';
 	import { randomEdges, createGraph, type Edge, type Graph } from 'mst-graphs';
-	import { callPrimsMST } from '$lib/prims';
+	import { prims } from '$lib/prims';
 	import D3Graph from '$lib/components/D3Graph.svelte';
 
 	let numNodes = 9;
@@ -35,7 +35,7 @@
 		mst = [];
 		// Calculate runtime
 		const startTime = performance.now();
-		mst = callPrimsMST(graph);
+		mst = prims(graph);
 		console.log(mst)
 		const endTime = performance.now();
 		runtime = endTime - startTime;
